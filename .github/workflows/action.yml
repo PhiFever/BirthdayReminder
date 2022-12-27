@@ -1,0 +1,36 @@
+# 脚本机器人的名字
+name: 'GitHub Actions Bot'
+
+# 触发条件
+on:
+  workflow_dispatch:
+  watch:
+    types: [ started ]
+  schedule:
+    - cron: '30 22 * * *'
+
+# 任务
+description:
+  "每天UTC22:30(北京时间6:30)运行一次，在你的朋友们生日前7天，3天以及当天给你自己的邮箱发送邮件作为提醒"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # 设置环境
+      - name: 'Set up Python'
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.6
+
+      # 安装库
+      - name: 'Install dependencies'
+        run: pip install -r ./requirements.txt
+
+      # 执行脚本
+      - name: 'run script'
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          PWD: ${{ secrets.PWD }}
+          SMTP: ${{ secrets.SMTP }}
+        run: python3 ./main.py
