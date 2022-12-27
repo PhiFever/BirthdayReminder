@@ -1,5 +1,5 @@
 import os
-from datetime import datetime, date
+from datetime import date
 
 import yaml
 

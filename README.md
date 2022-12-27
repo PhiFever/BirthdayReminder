@@ -22,4 +22,5 @@
      Calendar : "solar"
      Email : ""
       ```
-4. 在你的仓库中点击Actions，点击左侧的Birthday Reminder，点击右侧的Run workflow，点击Run workflow，即可开始运行。
+4. 在你的仓库中点击Actions，点击左侧的Birthday Reminder，点击右侧的Run workflow，点击Run workflow，即可开始运行测试。
+5. 成功后会在每天的早上北京时间6:30开始执行，每天执行一次，你可以在Actions中查看执行结果。若有符合条件的朋友生日快到了，则会在你的邮箱中收到提醒邮件。
