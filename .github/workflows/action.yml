@@ -17,6 +17,10 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - # 使用actions/checkout@v2获取仓库代码
+      - name: 'Checkout'
+        uses: actions/checkout@v2
+
       # 设置环境
       - name: 'Set up Python'
         uses: actions/setup-python@v1
@@ -27,10 +31,10 @@ jobs:
       - name: 'Install dependencies'
         run: pip install -r ./requirements.txt
 
-      # 执行脚本
+      # 执行
       - name: 'run script'
         env:
-          EMAIL: ${{ secrets.EMAIL }}
-          PWD: ${{ secrets.PWD }}
-          SMTP: ${{ secrets.SMTP }}
+          SENDER: ${{ secrets.SENDER }}
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+          RECEIVER: ${{ secrets.RECEIVER }}
         run: python3 ./main.py

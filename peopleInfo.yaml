@@ -1,0 +1,40 @@
+People:
+#   - Name : "Example"
+#     Birthdate : "2021-12-16"  # 日期格式为yyyy-MM-dd，若不知道年份则设置为0000
+#     Calendar : "lunar"  # 阴历：lunar 阳历：solar
+  - Name : "mt"
+    Birthdate : "1974-12-28"
+    Calendar : "solar"
+    Email : ""
+    
+  - Name : "fz"
+    Birthdate : "2020-7-29"
+    Calendar : "lunar"
+    Email : ""
+    
+  - Name : "lw"
+    Birthdate : "1996-10-11"
+    Calendar : "lunar"
+    Email : ""
+
+  - Name : "蕾哥"
+    Birthdate : "1997-12-06"
+    Calendar : "lunar"
+    Email : ""
+
+  - Name : "孔桑"
+    Birthdate : "1999-11-10"
+    Calendar : "lunar"
+    Email : ""
+
+  - Name : "yzh"
+    Birthdate : "2000-7-15"
+    Calendar : "lunar"
+    Email : ""
+
+  - Name : "st"
+    Birthdate : "0000-11-4"
+    Calendar : "lunar"
+    Email : ""
+
+
