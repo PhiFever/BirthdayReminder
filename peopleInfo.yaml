@@ -3,7 +3,7 @@ People:
 #     Birthdate : "2021-12-16"  # 日期格式为yyyy-MM-dd，若不知道年份则设置为0000
 #     Calendar : "lunar"  # 阴历：lunar 阳历：solar
   - Name : "mt"
-    Birthdate : "1974-12-28"
+    Birthdate : "1974-12-31"
     Calendar : "solar"
     Email : ""
     

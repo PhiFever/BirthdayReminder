@@ -9,11 +9,17 @@
    3. 最后一个名为`RECEIVER`，值为你接收信息的邮箱地址。可以为多个邮箱，用英文分号`；`分隔。eg.123@qq.com;456@163.com
    4. 添加完成后点击Add secret即可。
 3. 在peopInfo.yaml文件中添加你的朋友们的生日信息，格式如下：
-   1. name: 朋友的名字
-      birthday: 朋友的生日，格式为yyyy-mm-dd
-      email: 朋友的邮箱地址，可选
-   2. 例如：
-      name: 张三
-      birthday: 1999-01-01
-      email:
+   ```
+   Name: 朋友的名字
+   Birthdate: 朋友的生日，格式为yyyy-mm-dd，年份不知道的话填0000，月日必须填写正确。
+   Email: 朋友的邮箱地址，可选，不填写则不会在生日当天给朋友发送邮件。
+   ```
+   
+   例如：
+   ```
+   - Name : "mt"
+     Birthdate : "1974-12-31"
+     Calendar : "solar"
+     Email : ""
+      ```
 4. 在你的仓库中点击Actions，点击左侧的Birthday Reminder，点击右侧的Run workflow，点击Run workflow，即可开始运行。
