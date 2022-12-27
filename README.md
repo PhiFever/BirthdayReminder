@@ -6,7 +6,7 @@
 2. 在github上fork本项目，然后在你的仓库中点击Settings，进入Settings页面，点击左侧的Secrets->Actions，点击New repository secret，添加三个Secrets。 
    1. 第一个名为`SENDER`，值为你用来发送信息的邮箱地址。eg.123456@qq.com
    2. 另一个名为`MAIL_PASS`，值为你的邮箱授权码。
-   3. 最后一个名为`RECEIVER`，值为你接收信息的邮箱地址。可以为多个邮箱，用英文分号`；`分隔。
+   3. 最后一个名为`RECEIVER`，值为你接收信息的邮箱地址。可以为多个邮箱，用英文分号`；`分隔。eg.123@qq.com;456@163.com
    4. 添加完成后点击Add secret即可。
 3. 在peopInfo.yaml文件中添加你的朋友们的生日信息，格式如下：
    1. name: 朋友的名字
