@@ -30,6 +30,7 @@ if __name__ == "__main__":
     receivers = get_env("RECEIVERS").split(";")  # 接收邮件的目标邮箱,可以是多个,用;分隔
 
     people = getPeopleInfo()
+    content = ""
     for p in people:
         # 获取当前日期
         today = date.today()
@@ -43,10 +44,12 @@ if __name__ == "__main__":
             birthNow = date(today.year + 1, int(birthMonth), int(birthDay))  # 明年的生日日期
         time_distance = (birthNow - today).days  # 今天的日期减去生日的日期
 
-        content = f"您的好友{p['Name']}的{age}岁生日是{p['Birthdate']}，距今还有{time_distance}天"
+        content = content + f"您的好友{p['Name']}的{age}岁生日是{birthMonth + '-' + birthDay}，距今还有{time_distance}天\n"
+
+    # 发送邮件
+    for receiver in receivers:
+        # mail = Mail(mail_host, mail_user, mail_pass, sender, receiver)
+        # message = mail.message_config("生日提醒", content)
+        # mail.send_mail(message)
         print(content)
-        for receiver in receivers:
-            # mail = Mail(mail_host, mail_user, mail_pass, sender, receiver)
-            # message = mail.message_config("生日提醒", content)
-            # mail.send_mail(message)
-            print("Successfully sent a mail to %s" % receiver)
+        print("Successfully sent a mail to %s\n" % receiver)
