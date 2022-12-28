@@ -7,11 +7,11 @@ from email.mime.text import MIMEText
 class MailBot:
     def __init__(self, mail_host, mail_user, mail_pass, sender, receiver):
         """
-        :param mail_host: 邮箱服务器地址
-        :param mail_user: 用户名
+        :param mail_host: 邮箱服务器地址(如smtp.qq.com)
+        :param mail_user: 用户名(xyz123)
         :param mail_pass: 密码(部分邮箱为授权码)
-        :param sender: 邮件发送方邮箱地址
-        :param receivers: 邮件接受方邮箱地址
+        :param sender: 邮件发送方邮箱地址(xyz123.qq.com)
+        :param receiver: 邮件接受方邮箱地址
         """
         self.mail_host = mail_host
         self.mail_user = mail_user
