@@ -18,14 +18,14 @@ jobs:
         uses: actions/checkout@v2
 
       # 设置环境
-      - name: 'Set up Python'
-        uses: actions/setup-python@v1
-        with:
-          python-version: 3.6
+      - name: Install Python
+        run: |
+            sudo apt update && \
+            sudo apt install python3
 
       # 安装库
       - name: 'Install dependencies'
-        run: pip install -r ./requirements.txt
+        run: pip3 install -r ./requirements.txt
 
       # 执行
       - name: 'run script'
