@@ -13,7 +13,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - # 使用actions/checkout@v2获取仓库代码
+      # 使用actions/checkout@v2获取仓库代码
       - name: 'Checkout'
         uses: actions/checkout@v2
 
