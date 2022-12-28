@@ -1,5 +1,5 @@
 # 脚本机器人的名字
-name: 'GitHub Actions Bot'
+name: 'birthdayReminderBot'
 
 # 触发条件
 on:
