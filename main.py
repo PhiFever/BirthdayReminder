@@ -3,7 +3,7 @@ from datetime import date
 from borax.calendars.lunardate import LunarDate
 
 import yaml
-
+from cipherIO import CipherIO
 from mail import Mail
 
 
@@ -15,12 +15,31 @@ def get_env(env_name: str) -> str:
         raise ValueError(f"Environment variable {env_name} not found")
 
 
-def getPeopleInfo():
-    curPath = os.path.dirname(os.path.realpath(__file__))
-    peoplePath = os.path.join(curPath, "./peopleInfo.yaml")
+# 从明文的yaml文件中读取数据
+def getPeopleInfo(peoplePath: str) -> list:
     peopleFile = open(peoplePath, 'r', encoding='utf-8')
     peopleDict = yaml.load(peopleFile.read(), Loader=yaml.FullLoader)
     return peopleDict["People"]
+
+
+# 把一个由dict组成的list转换成bytes
+def dictList2bytes(dictList):
+    bytes_str = "".encode('utf-8')
+    for person in dictList:
+        if bytes_str == "".encode('utf-8'):
+            bytes_str = bytes(str(person), 'utf-8')
+        else:
+            bytes_str = bytes_str + ";".encode('utf-8') + bytes(str(person), 'utf-8')
+    return bytes_str
+
+
+# 从密文的yaml文件中读取数据
+def getPeopleInfoCipher(cipher: CipherIO) -> list:
+    strList = cipher.readCipherYaml()
+    people = []
+    for str0 in strList:
+        people.append(eval(str0))
+    return people
 
 
 # 输入的生日是公历生日
@@ -73,7 +92,25 @@ if __name__ == "__main__":
     mail_host = "".join(["smtp.", sender.split("@")[1]])
     mail_user = sender.split("@")[0]
     receivers = get_env("RECEIVERS").split(";")  # 接收邮件的目标邮箱,可以是多个,用;分隔
-    people = getPeopleInfo()
+
+    key = get_env("KEY").encode('utf-8')  # 对朋友的信息进行对称加密的密钥
+
+    curPath = os.path.dirname(os.path.realpath(__file__))
+    peoplePath = os.path.join(curPath, "./peopleInfo.yaml")
+    peopleCipherPath = os.path.join(curPath, "peopleCipherInfo.yaml")
+    cipher = CipherIO(key)
+
+    if os.path.exists(peoplePath):
+        people = getPeopleInfo(peoplePath)
+        cipher.createCipherYaml(dictList2bytes(people), peopleCipherPath)
+        os.remove(peoplePath)
+    elif os.path.exists(peopleCipherPath):
+        strList = list(cipher.readCipherYaml(peopleCipherPath).split(";"))
+        people = []
+        for str0 in strList:
+            people.append(eval(str0))
+    else:
+        raise FileNotFoundError("peopleInfo.yaml or peopleCipherInfo.yaml not found")
 
     mail_flag = False  # 判断是否发送邮件
     content_flag = False

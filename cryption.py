@@ -3,7 +3,7 @@ import nacl.utils
 from nacl.utils import EncryptedMessage
 
 
-def encrypt(key, plaintext) -> EncryptedMessage:
+def encrypt(key: bytes, plaintext: bytes) -> EncryptedMessage:
     # This is your safe, you can use it to encrypt or decrypt messages
     box = nacl.secret.SecretBox(key)
 
@@ -16,7 +16,7 @@ def encrypt(key, plaintext) -> EncryptedMessage:
     return ciphertext
 
 
-def decrypt(key, ciphertext) -> str:
+def decrypt(key: bytes, ciphertext: EncryptedMessage) -> str:
     # This is your safe, you can use it to encrypt or decrypt messages
     box = nacl.secret.SecretBox(key)
 
@@ -29,7 +29,13 @@ def decrypt(key, ciphertext) -> str:
 if __name__ == "__main__":
     # This is our message to send, it must be a bytestring as SecretBox
     # We will treat it as just a binary blob of data.
-    message = b"The president will be exiting through the lower levels"
+    # Here are examples of how to encrypt and decrypt
+    message = '{"Name": "张三", "Birthdate": "1997-12-06", "Calendar": "lunar", "Email": ""}'
+    plaintext = bytes(message, 'utf-8')
     key = b"12345678901234567890123456789012"
-    print(encrypt(key, message))
-    print(decrypt(key, encrypt(key, message)))
+
+    ciphertext = encrypt(key, plaintext)
+    print(ciphertext)
+
+    loadtext = decrypt(key, ciphertext)
+    print(loadtext)
