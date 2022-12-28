@@ -19,7 +19,7 @@ def get_env(env_name: str) -> str:
 def getPeopleInfo(peoplePath: str) -> list:
     peopleFile = open(peoplePath, 'r', encoding='utf-8')
     peopleDict = yaml.load(peopleFile.read(), Loader=yaml.FullLoader)
-    return peopleDict["People"]
+    return peopleDict
 
 
 # 把一个由dict组成的list转换成bytes
