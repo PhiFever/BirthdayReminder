@@ -4,7 +4,7 @@ from borax.calendars.lunardate import LunarDate
 
 import yaml
 from cipherIO import CipherIO
-from mailBot import Mail
+from mailBot import MailBot
 
 
 def get_env(env_name: str) -> str:
@@ -121,7 +121,7 @@ if __name__ == "__main__":
     if mail_flag:
         # 发送邮件
         for receiver in receivers:
-            mail = Mail(mail_host, mail_user, mail_pass, sender, receiver)
+            mail = MailBot(mail_host, mail_user, mail_pass, sender, receiver)
             message = mail.message_config("生日提醒", contents)
             mail.send_mail(message)
 

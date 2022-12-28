@@ -4,7 +4,7 @@ import smtplib
 from email.mime.text import MIMEText
 
 
-class Mail:
+class MailBot:
     def __init__(self, mail_host, mail_user, mail_pass, sender, receiver):
         """
         :param mail_host: 邮箱服务器地址
