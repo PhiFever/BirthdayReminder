@@ -32,6 +32,6 @@ jobs:
         env:
           SENDER: ${{ secrets.SENDER }}
           MAIL_PASS: ${{ secrets.MAIL_PASS }}
-          RECEIVER: ${{ secrets.RECEIVER }}
+          RECEIVERS: ${{ secrets.RECEIVERS }}
           KEY: ${{ secrets.KEY }}
         run: python3 ./main.py
