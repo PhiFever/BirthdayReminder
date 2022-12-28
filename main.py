@@ -4,7 +4,7 @@ from borax.calendars.lunardate import LunarDate
 
 import yaml
 from cipherIO import CipherIO
-from mail import Mail
+from mailBot import Mail
 
 
 def get_env(env_name: str) -> str:
@@ -31,15 +31,6 @@ def dictList2bytes(dictList):
         else:
             bytes_str = bytes_str + ";".encode('utf-8') + bytes(str(person), 'utf-8')
     return bytes_str
-
-
-# 从密文的yaml文件中读取数据
-def getPeopleInfoCipher(cipher: CipherIO) -> list:
-    strList = cipher.readCipherYaml()
-    people = []
-    for str0 in strList:
-        people.append(eval(str0))
-    return people
 
 
 # 输入的生日是公历生日
