@@ -130,10 +130,10 @@ if __name__ == "__main__":
     if mail_flag:
         # 发送邮件
         for receiver in receivers:
-            mail = Mail(mail_host, mail_user, mail_pass, sender, receiver)
-            message = mail.message_config("生日提醒", contents)
-            mail.send_mail(message)
+            # mail = Mail(mail_host, mail_user, mail_pass, sender, receiver)
+            # message = mail.message_config("生日提醒", contents)
+            # mail.send_mail(message)
 
             # 下面是测试用的调试语句
-            # print(contents)
-            # print("Successfully sent a mail to %s\n" % receiver)
+            print(contents)
+            print("Successfully sent a mail to %s\n" % receiver)
