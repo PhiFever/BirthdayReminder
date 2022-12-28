@@ -60,7 +60,7 @@ def SolarCalendar(person):
 
     if int(days_distance) == 0 or int(days_distance) == 3 or int(days_distance) == 7:
         flag = True
-        content = f"您的好友{person['Name']}的{age}岁生日是{birth_month + '-' + birth_day}，距今还有{days_distance}天\n"
+        content = f"您的好友{person['Name']}的{age}岁生日是公历{birth_month + '-' + birth_day}，距今还有{days_distance}天\n"
     return flag, content
 
 
@@ -82,7 +82,7 @@ def LunarCalendar(person):
 
     if int(days_distance) == 0 or int(days_distance) == 3 or int(days_distance) == 7:
         flag = True
-        content = f"您的好友{person['Name']}的{age}岁生日是{birth_month + '-' + birth_day}，距今还有{days_distance}天\n"
+        content = f"您的好友{person['Name']}的{age}岁生日是农历{birth_month + '-' + birth_day}，距今还有{days_distance}天\n"
     return flag, content
 
 
