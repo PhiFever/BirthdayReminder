@@ -19,8 +19,8 @@ if __name__ == '__main__':
     key = get_env("KEY").encode('utf-8')  # 对朋友的信息进行对称加密的密钥
 
     curPath = os.path.dirname(os.path.realpath(__file__))
-    peoplePath = os.path.join(curPath, "./peopleInfo.yaml")
-    peopleCipherPath = os.path.join(curPath, "peopleCipherInfo.yaml")
+    peoplePath = os.path.join(curPath, "../config/peopleInfo.yaml")
+    peopleCipherPath = os.path.join(curPath, "../config/peopleCipherInfo.yaml")
     cipher = CipherIO(key)
 
     if os.path.exists(peopleCipherPath):

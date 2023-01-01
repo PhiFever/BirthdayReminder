@@ -5,6 +5,7 @@ from borax.calendars.lunardate import LunarDate
 import yaml
 from cipherIO import CipherIO
 from mailBot import MailBot
+from FeishuBot import FeiShuBot
 
 
 def get_env(env_name: str) -> str:
@@ -51,7 +52,7 @@ def SolarCalendar(person):
 
     if int(days_distance) == 0 or int(days_distance) == 3 or int(days_distance) == 7:
         flag = True
-        content = f"您的好友{person['Name']}的{age}岁生日是公历{birth_month + '-' + birth_day}，距今还有{days_distance}天\n"
+        content = f"您的好友{person['Name']}的{age}岁生日是公历{birth_month + '-' + birth_day}日，距今还有{days_distance}天\n"
     return flag, content
 
 
@@ -73,7 +74,7 @@ def LunarCalendar(person):
 
     if int(days_distance) == 0 or int(days_distance) == 3 or int(days_distance) == 7:
         flag = True
-        content = f"您的好友{person['Name']}的{age}岁生日是农历{birth_month + '-' + birth_day}，距今还有{days_distance}天\n"
+        content = f"您的好友{person['Name']}的{age}岁生日是农历{birth_month + '-' + birth_day}日，距今还有{days_distance}天\n"
     return flag, content
 
 
@@ -83,12 +84,11 @@ if __name__ == "__main__":
     mail_host = "".join(["smtp.", sender.split("@")[1]])
     mail_user = sender.split("@")[0]
     receivers = get_env("RECEIVERS").split(";")  # 接收邮件的目标邮箱,可以是多个,用;分隔
-
     key = get_env("KEY").encode('utf-8')  # 对朋友的信息进行对称加密的密钥
 
     curPath = os.path.dirname(os.path.realpath(__file__))
-    peoplePath = os.path.join(curPath, "./peopleInfo.yaml")
-    peopleCipherPath = os.path.join(curPath, "peopleCipherInfo.yaml")
+    peoplePath = os.path.join(curPath, "../config/peopleInfo.yaml")
+    peopleCipherPath = os.path.join(curPath, "../config/peopleCipherInfo.yaml")
     cipher = CipherIO(key)
 
     if os.path.exists(peoplePath):
@@ -103,7 +103,7 @@ if __name__ == "__main__":
     else:
         raise FileNotFoundError("peopleInfo.yaml or peopleCipherInfo.yaml not found")
 
-    mail_flag = False  # 判断是否发送邮件
+    send_flag = False  # 判断是否发送邮件
     content_flag = False
     contents = ""
 
@@ -116,9 +116,9 @@ if __name__ == "__main__":
             raise ValueError("Calendar must be Solar or Lunar")
         if content_flag:
             contents = contents + content
-            mail_flag = True
+            send_flag = True
 
-    if mail_flag:
+    if send_flag:
         # 发送邮件
         for receiver in receivers:
             mail = MailBot(mail_host, mail_user, mail_pass, sender, receiver)
@@ -128,3 +128,19 @@ if __name__ == "__main__":
             # 下面是测试用的调试语句
             # print(contents)
             # print("Successfully sent a mail to %s\n" % receiver)
+
+        # 发送飞书消息
+        try:
+            webhook = get_env("WEBHOOK")  # 飞书机器人的webhook地址
+            feishuBot = FeiShuBot(webhook)
+            msg = feishuBot.msg_config(contents)
+            feishuBot.send_msg(msg)
+
+            # # 下面是测试用的调试语句
+            # print(contents)
+            # print("飞书消息发送成功\n")
+        except Exception as e:
+            print(f"飞书消息发送失败，原因为：{e}\n")
+
+
+

@@ -11,6 +11,8 @@
    2. 名为`MAIL_PASS`，值为你的邮箱授权码。
    3. 名为`RECEIVER`，值为你接收信息的邮箱地址。可以为多个邮箱，用英文分号`；`分隔。eg.123@qq.com;456@163.com
    4. 名为`KEY`，值为你用来加解密peopleInfo.yaml的密钥，可以为任意32 字节字符串。
+   5. (可选)名为`WEBHOOK`，值为你飞书机器人的webhook地址，用于发送提醒信息。eg.https://open.feishu.cn/open-apis/bot/v2/hook/xxx
+   飞书机器人的配置可以参考[这里](https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN)，若使用关键词筛选，请添加关键词“生日”，“好友”。
 3. 在peopleInfo.yaml文件中添加你的朋友们的生日信息，格式如下(可参照peopleInfor_example.yaml)：
    ```
    Name: 朋友的名字
