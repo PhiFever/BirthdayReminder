@@ -29,4 +29,13 @@
 4. 在你的仓库中点击Actions，点击左侧的Birthday Reminder，点击右侧的Run workflow，点击Run workflow，即可开始运行测试。
 5. 成功后会在每天的早上北京时间6:30开始执行，每天执行一次，你可以在Actions中查看执行结果。若有符合条件的朋友生日快到了，则会在你的邮箱中收到提醒邮件。
 6. 如需修改相关信息，可以在本地添加环境变量`KEY`后运行decrypt.py解密peopleCipherInfo.yaml文件，修改后将peopleCipherInfo.yaml文件提交到你的仓库中，最后手动执行一次workflow即可完成更新。
-7. 本项目基于[birthdayBot](https://github.com/2892211452/birthdayBot)修改而来，感谢原作者。
+
+## 致谢
+本项目基于[birthdayBot](https://github.com/2892211452/birthdayBot)修改而来，感谢原作者。
+
+## License
+```
+MIT License
+
+Copyright (c) 2023 龙雀
+```
