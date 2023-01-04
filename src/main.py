@@ -125,22 +125,27 @@ if __name__ == "__main__":
             message = mail.message_config("生日提醒", contents)
             mail.send_mail(message)
 
-            # 下面是测试用的调试语句
+            # # 下面是测试用的调试语句
             # print(contents)
             # print("Successfully sent a mail to %s\n" % receiver)
 
         # 发送飞书消息
         try:
             webhook = get_env("WEBHOOK")  # 飞书机器人的webhook地址
-            feishuBot = FeiShuBot(webhook)
+            try:
+                secret = get_env("SECRET")  # 飞书机器人的secret
+            except Exception as e:
+                print("飞书机器人的secret未设置!\n")
+                secret = None
+            if secret:
+                feishuBot = FeiShuBot(webhook, secret)
+            else:
+                feishuBot = FeiShuBot(webhook)
             msg = feishuBot.msg_config(contents)
             feishuBot.send_msg(msg)
-
-            # # 下面是测试用的调试语句
-            # print(contents)
-            # print("飞书消息发送成功\n")
         except Exception as e:
             print(f"飞书消息发送失败，原因为：{e}\n")
 
-
-
+        # # 下面是测试用的调试语句
+        # print(contents)
+        # print("飞书消息发送成功\n")

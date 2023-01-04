@@ -13,7 +13,8 @@
    4. 名为`KEY`，值为你用来加解密peopleInfo.yaml的密钥，可以为任意32 字节字符串。
    5. (可选)名为`WEBHOOK`，值为你飞书机器人的webhook地址，用于发送提醒信息。eg.https://open.feishu.cn/open-apis/bot/v2/hook/xxx
    飞书机器人的配置可以参考[这里](https://open.feishu.cn/document/ukTMukTMukTM/ucTM5YjL3ETO24yNxkjN)，若使用关键词筛选，请添加关键词“生日”，“好友”。
-3. 在peopleInfo.yaml文件中添加你的朋友们的生日信息，格式如下(可参照peopleInfor_example.yaml)：
+   6. (可选，且只有在你配置了`WEBHOOK`且在飞书机器人采用`签名校验`方式进行安全设置时需要执行)名为`SECRET`，值为你飞书机器人的`密钥`。
+3. 在peopleInfo.yaml文件中添加你的朋友们的生日信息，格式如下(可参照/config/peopleInfo_example.yaml)：
    ```
    Name: 朋友的名字
    Birthdate: 朋友的生日，格式为yyyy-mm-dd，年份不知道的话填0000，月日必须填写正确。

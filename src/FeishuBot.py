@@ -36,19 +36,15 @@ class FeiShuBot(object):
         self.webhook = webhook
         self.secret = secret
 
-    def generate_sign(self):
-        # 获取当前时间戳
-        now = datetime.now()
-        timestamp = datetime.timestamp(now)
-
+    def generate_sign(self, timestamp, secret):
         # 拼接timestamp和secret
-        string_to_sign = '{}\n{}'.format(timestamp, self.secret)
+        string_to_sign = '{}\n{}'.format(timestamp, secret)
         hmac_code = hmac.new(string_to_sign.encode("utf-8"), digestmod=hashlib.sha256).digest()
 
         # 对结果进行base64处理
         sign = base64.b64encode(hmac_code).decode('utf-8')
 
-        return timestamp, sign
+        return sign
 
     def msg_config(self, content):
         """
@@ -59,7 +55,10 @@ class FeiShuBot(object):
             raise ValueError("text类型的消息内容不能为空！")
 
         if self.secret:
-            timestamp, sign = self.generate_sign()
+            # 获取当前时间戳
+            timestamp = int(datetime.timestamp(datetime.now()))
+
+            sign = self.generate_sign(timestamp, self.secret)
             msg = {
                 "timestamp": timestamp,
                 "sign": sign,
@@ -84,7 +83,8 @@ class FeiShuBot(object):
         try:
             response = requests.post(self.webhook, headers=self.headers, data=json.dumps(msg), verify=False)
         except requests.exceptions.HTTPError as exc:
-            logging.error("飞书消息发送失败， HTTP error: %d, reason: %s" % (exc.response.status_code, exc.response.reason))
+            logging.error(
+                "飞书消息发送失败， HTTP error: %d, reason: %s" % (exc.response.status_code, exc.response.reason))
             raise
         except requests.exceptions.ConnectionError:
             logging.error("飞书消息发送失败，HTTP connection error!")
@@ -107,5 +107,5 @@ class FeiShuBot(object):
                         logging.info("飞书消息发送成功！")
                         print("飞书消息发送成功！")
                 except KeyError:
-                    logging.error(f"飞书消息发送失败，错误信息{result}")
+                    logging.error(f"飞书消息发送失败，错误信息{result}\nmsg:{msg}")
                     raise
