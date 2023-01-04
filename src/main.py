@@ -149,3 +149,6 @@ if __name__ == "__main__":
         # # 下面是测试用的调试语句
         # print(contents)
         # print("飞书消息发送成功\n")
+
+    else:
+        print("今天没有好友的生日\n")
