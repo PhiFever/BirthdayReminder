@@ -1,5 +1,6 @@
 import os
 from datetime import date
+import datetime
 from borax.calendars.lunardate import LunarDate
 
 import yaml
@@ -40,7 +41,7 @@ def SolarCalendar(person):
     content = ""
 
     today = date.today()
-    birth_year, birth_month, birth_day = person["Birthdate"].split('-')
+    birth_year, birth_month, birth_day = str(person["Birthdate"]).split('-')
     if birth_year == "0000":
         age = "None"
     else:
