@@ -18,14 +18,14 @@ def get_env(env_name: str) -> str:
 
 
 # 从明文的yaml文件中读取数据
-def getPeopleInfo(peoplePath: str) -> list:
+def get_people_info(peoplePath: str) -> list:
     peopleFile = open(peoplePath, 'r', encoding='utf-8')
     peopleDict = yaml.load(peopleFile.read(), Loader=yaml.FullLoader)
     return peopleDict
 
 
 # 把一个由dict组成的list转换成bytes
-def dictList2bytes(dictList):
+def dict_list2bytes(dictList):
     bytes_str = "".encode('utf-8')
     for person in dictList:
         if bytes_str == "".encode('utf-8'):
@@ -36,7 +36,7 @@ def dictList2bytes(dictList):
 
 
 # 输入的生日是公历生日
-def SolarCalendar(person):
+def solar_calendar(person):
     flag = False
     content = ""
 
@@ -46,10 +46,10 @@ def SolarCalendar(person):
         age = "None"
     else:
         age = today.year - int(birth_year)
-    birthNow = date(today.year, int(birth_month), int(birth_day))  # 今年的生日日期
-    if birthNow < today:
-        birthNow = date(today.year + 1, int(birth_month), int(birth_day))  # 明年的生日日期
-    days_distance = (birthNow - today).days  # 今天的日期减去生日的日期
+    birth_now = date(today.year, int(birth_month), int(birth_day))  # 今年的生日日期
+    if birth_now < today:
+        birth_now = date(today.year + 1, int(birth_month), int(birth_day))  # 明年的生日日期
+    days_distance = (birth_now - today).days  # 今天的日期减去生日的日期
 
     if int(days_distance) == 0 or int(days_distance) == 3 or int(days_distance) == 7:
         flag = True
@@ -58,7 +58,7 @@ def SolarCalendar(person):
 
 
 # 输入的生日是农历生日
-def LunarCalendar(person):
+def lunar_calendar(person):
     flag = False
     content = ""
 
@@ -93,8 +93,8 @@ if __name__ == "__main__":
     cipher = CipherIO(key)
 
     if os.path.exists(peoplePath):
-        people = getPeopleInfo(peoplePath)
-        cipher.createCipherYaml(dictList2bytes(people), peopleCipherPath)
+        people = get_people_info(peoplePath)
+        cipher.createCipherYaml(dict_list2bytes(people), peopleCipherPath)
         os.remove(peoplePath)
     elif os.path.exists(peopleCipherPath):
         strList = list(cipher.readCipherYaml(peopleCipherPath).split(";"))
@@ -110,9 +110,9 @@ if __name__ == "__main__":
 
     for person in people:
         if person["Calendar"] == "solar":
-            content_flag, content = SolarCalendar(person)
+            content_flag, content = solar_calendar(person)
         elif person["Calendar"] == "lunar":
-            content_flag, content = LunarCalendar(person)
+            content_flag, content = lunar_calendar(person)
         else:
             raise ValueError("Calendar must be Solar or Lunar")
         if content_flag:
