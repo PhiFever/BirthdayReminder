@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-from cryption import encrypt, decrypt
+from utils.cryption import encrypt, decrypt
 
 
 class CipherIO:

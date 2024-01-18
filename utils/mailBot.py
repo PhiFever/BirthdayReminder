@@ -33,14 +33,14 @@ class MailBot:
         """
         # 登录并发送邮件
         try:
-            smtpObj = smtplib.SMTP_SSL(self.mail_host)
+            smtp_obj = smtplib.SMTP_SSL(self.mail_host)
             # 登录到服务器
-            smtpObj.login(self.mail_user, self.mail_pass)
+            smtp_obj.login(self.mail_user, self.mail_pass)
             # 发送
-            smtpObj.sendmail(
+            smtp_obj.sendmail(
                 self.sender, self.receiver, message.as_string())
             # 退出
-            smtpObj.quit()
+            smtp_obj.quit()
             print('Successfully sent a mail to %s' % self.receiver)
         except smtplib.SMTPException as e:
             print('Failed to send mail to xxx %s\nCaused by' % self.receiver, e)  # 打印错误
