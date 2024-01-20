@@ -1,11 +1,12 @@
-import ast
 import os
+import pickle
 from datetime import date
 
 import yaml
 from borax.calendars.lunardate import LunarDate
 
 from utils.cipherIO import CipherIO
+from utils.decryptInfo import decrypt_info
 from utils.mailBot import MailBot
 
 
@@ -18,24 +19,14 @@ def get_env(env_name: str) -> str:
 
 
 # 从明文的yaml文件中读取数据
-def get_people_info(peoplePath: str) -> list:
-    peopleFile = open(peoplePath, 'r', encoding='utf-8')
-    peopleDict = yaml.load(peopleFile.read(), Loader=yaml.FullLoader)
-    return peopleDict
+def get_people_info(file_path: str) -> list:
+    people_file = open(file_path, 'r', encoding='utf-8')
+    people_dict = yaml.load(people_file.read(), Loader=yaml.FullLoader)
+    # print(people_dict)
+    return people_dict
 
 
-# 把一个由dict组成的list转换成bytes
-def dict_list2bytes(dictList):
-    bytes_str = "".encode('utf-8')
-    for person in dictList:
-        if bytes_str == "".encode('utf-8'):
-            bytes_str = bytes(str(person), 'utf-8')
-        else:
-            bytes_str = bytes_str + ";".encode('utf-8') + bytes(str(person), 'utf-8')
-    return bytes_str
-
-
-def calculate_birthday(person, calendar_type='solar'):
+def calculate_birthday_distance(person, calendar_type='solar'):
     flag = False
     content = ""
 
@@ -71,21 +62,14 @@ if __name__ == "__main__":
     curPath = os.path.dirname(os.path.realpath(__file__))
     peoplePath = os.path.join(curPath, "./config/peopleInfo.yaml")
     peopleCipherPath = os.path.join(curPath, "./config/peopleCipherInfo.yaml")
-    cipher = CipherIO(key)
+    cipher_io = CipherIO(key)
 
     if os.path.exists(peoplePath):
         people = get_people_info(peoplePath)
-        cipher.createCipherYaml(dict_list2bytes(people), peopleCipherPath)
+        cipher_io.create_cipher_yaml(pickle.dumps(people), peopleCipherPath)
         os.remove(peoplePath)
     elif os.path.exists(peopleCipherPath):
-        people_str_list = cipher.readCipherYaml(peopleCipherPath).split(";")
-        people = []
-        for ps in people_str_list:
-            # 将单引号替换为双引号
-            str_to_convert = ps.replace("'", '"')
-            # 使用 ast.literal_eval 将字符串安全地转换为字典
-            converted_dict = ast.literal_eval(str_to_convert)
-            people.append(converted_dict)
+        people = decrypt_info(cipher_io, peopleCipherPath)
     else:
         raise FileNotFoundError("peopleInfo.yaml or peopleCipherInfo.yaml not found")
 
@@ -94,8 +78,9 @@ if __name__ == "__main__":
     contents = ""
 
     for person in people:
+        # print(person)
         try:
-            content_flag, content = calculate_birthday(person, calendar_type=person['Calendar'])
+            content_flag, content = calculate_birthday_distance(person, calendar_type=person['CalendarType'])
             if content_flag:
                 contents = contents + content
                 send_flag = True

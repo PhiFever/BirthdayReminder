@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import os
-import datetime
+import pickle
+
 import yaml
 
-from cipherIO import CipherIO
+from utils.cipherIO import CipherIO
 
 
 def get_env(env_name: str) -> str:
@@ -13,6 +14,11 @@ def get_env(env_name: str) -> str:
         return os.environ[env_name]
     except KeyError:
         raise ValueError(f"Environment variable {env_name} not found")
+
+
+def decrypt_info(cipher, peopleCipherPath) -> list:
+    people = pickle.loads(cipher.read_cipher_yaml(peopleCipherPath))
+    return people
 
 
 if __name__ == '__main__':
@@ -24,10 +30,7 @@ if __name__ == '__main__':
     cipher = CipherIO(key)
 
     if os.path.exists(peopleCipherPath):
-        strList = list(cipher.readCipherYaml(peopleCipherPath).split(";"))
-        people = []
-        for str0 in strList:
-            people.append(eval(str0))
+        people = decrypt_info(cipher, peopleCipherPath)
 
         # 写入到yaml文件
         with open(peoplePath, "w", encoding="utf-8") as f:
