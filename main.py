@@ -20,10 +20,10 @@ def get_env(env_name: str) -> str:
 
 # 从明文的yaml文件中读取数据
 def get_people_info(file_path: str) -> list:
-    people_file = open(file_path, 'r', encoding='utf-8')
-    people_dict = yaml.load(people_file.read(), Loader=yaml.FullLoader)
-    # print(people_dict)
-    return people_dict
+    with open(file_path, 'r', encoding='utf-8') as people_file:
+        people_dict = yaml.load(people_file.read(), Loader=yaml.FullLoader)
+        # print(people_dict)
+        return people_dict
 
 
 def calculate_birthday_distance(person, calendar_type='solar'):
