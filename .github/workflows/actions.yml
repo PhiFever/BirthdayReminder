@@ -36,4 +36,4 @@ jobs:
           KEY: ${{ secrets.KEY }}
           WEBHOOK: ${{ secrets.WEBHOOK }}
           SECRET: ${{ secrets.SECRET }}
-        run: python3 ./src/main.py
+        run: python3 main.py
